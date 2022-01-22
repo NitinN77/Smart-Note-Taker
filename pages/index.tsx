@@ -3,14 +3,14 @@ import Head from 'next/head'
 import Sidebar from '../components/Sidebar'
 import Main from '../components/Main'
 import { useState } from 'react'
-import { Notes, Note } from '../util/interfaces'
+import { SideNotes, Note } from '../util/interfaces'
 
 const uuid = require('react-uuid')
 
 
 const Home: NextPage = () => {
 
-  const [notes, setNotes] = useState<Notes["notes"]>([]);
+  const [notes, setNotes] = useState<SideNotes["notes"]>([]);
   const [activeNote, setActiveNote] = useState<any>();
 
   const onAddNote = (): void => {

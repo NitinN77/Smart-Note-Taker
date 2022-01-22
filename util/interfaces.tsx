@@ -5,7 +5,7 @@ export interface Note {
     lastModified: number;
 }
 
-export interface Notes {
+export interface SideNotes {
     notes: Note[]
     onAddNote: () => void;
     onDeleteNote: (idToDelete: number) => void;

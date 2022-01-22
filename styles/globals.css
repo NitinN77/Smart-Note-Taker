@@ -43,6 +43,46 @@ button:hover {
   border-right: 1px solid #ddd;
 }
 
+.app-sidenav {
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+  .app-sidebar {
+    display: none !important;
+  }
+  .app-sidenav {
+    display: block;
+  }
+}
+
+.float-button {
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+  .float-button {
+    display: block;
+  }
+}
+
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#000;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+	margin-top:22px;
+}
+
 .app-sidebar-header {
   display: flex;
   justify-content: space-between;
@@ -53,7 +93,7 @@ button:hover {
 }
 
 .app-sidebar-notes {
-  height: calc(100vh - 78px);
+  height: calc(100vh - 73px);
   overflow-y: scroll;
 }
 .app-sidebar-note {
@@ -90,6 +130,13 @@ button:hover {
   width: 70%;
   height: 100vh;
 }
+@media screen and (max-width: 800px) {
+  .app-main {
+    width: 100%;
+    height: 100vh;
+  }
+}
+
 .app-main-note-edit,
 .app-main-note-preview {
   height: 50vh;
