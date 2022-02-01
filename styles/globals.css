@@ -16,7 +16,7 @@ body,
 .sign-up-main {
   margin-top: 12rem;
   display: grid;
-  grid-template-columns: 25% 50% 25%;
+  grid-template-columns: 30% 40% 30%;
 }
 
 .sign-up-form {
@@ -29,21 +29,48 @@ body,
 } */
 
 .sign-up-form-field{
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   width: 100%;
+  padding: 0.8em 1.5em;
+  border-radius: 0.4rem;
+  outline: none;
+  border: 1px solid #898989;
+  background-color: #F7F7F7;
+  font-weight: bold;
+  letter-spacing: 0.15rem;
 }
 
 .sign-up-form-buttons {
+  margin-top: 1.7rem;
   display: flex;
   place-content: center;
 }
 
-.sign-up-form-button{
+.log-in-button {
   margin-top: 1rem;
-  margin-right: 1rem;
+  margin-right: 2rem;
+  background-color: #7F6BFF;
+  border: none;
+  font-weight: bold;
+  width: 9rem;
+  height: 3rem;
+  border-radius: 0.4rem;
+  color: white;
+  letter-spacing: 0.15rem;
+  cursor: pointer;
 }
 
-
+.sign-up-button {
+  margin-top: 1rem;
+  margin-right: 1rem;
+  border: none;
+  font-weight: bold;
+  width: 9rem;
+  height: 3rem;
+  border-radius: 0.4rem;
+  letter-spacing: 0.15rem;
+  cursor: pointer;
+}
 
 @media screen and (max-width: 800px) {
   .sign-up-main {

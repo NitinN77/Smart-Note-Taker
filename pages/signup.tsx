@@ -13,10 +13,9 @@ const SignUp: NextPage = () => {
                 <input type="password" placeholder='PASSWORD' className='sign-up-form-field'/>
                 <br />
                 <div className='sign-up-form-buttons'>                
-                    <input type="submit" value={"LOGIN"} className='sign-up-form-button'/> 
-                    <input type='submit' value={"SIGN UP"} className='sign-up-form-button'/>
+                    <input type="submit" value={"LOGIN"} className='log-in-button'/> 
+                    <input type='submit' value={"SIGN UP"} className='sign-up-button'/>
                 </div>
-
             </div>
             <div></div>
         </div>
