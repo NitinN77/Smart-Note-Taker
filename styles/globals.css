@@ -13,6 +13,46 @@ body,
   font-size: 16px;
 }
 
+.sign-up-main {
+  margin-top: 12rem;
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+}
+
+.sign-up-form {
+  margin: 1rem;
+  padding: 1rem;
+}
+
+/* .sign-up-header {
+  
+} */
+
+.sign-up-form-field{
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.sign-up-form-buttons {
+  display: flex;
+  place-content: center;
+}
+
+.sign-up-form-button{
+  margin-top: 1rem;
+  margin-right: 1rem;
+}
+
+
+
+@media screen and (max-width: 800px) {
+  .sign-up-main {
+    margin-top: 12rem;
+    display: grid;
+    grid-template-columns: 100%;
+  }  
+}
+
 button {
   background: none;
   border: 0;
@@ -131,6 +171,7 @@ button:hover {
   width: 70%;
   height: 100vh;
 }
+
 @media screen and (max-width: 800px) {
   .app-main {
     width: 100%;
@@ -197,12 +238,8 @@ textarea {
   bottom: 0;
   left: 0;
   height: 80px;
-  width: 100;
   /* background-color: red; */
   width: 30%;
   padding: 1rem 1.2rem;
 }
 
-.addicon:hover {
-  height: 120px;
-}
