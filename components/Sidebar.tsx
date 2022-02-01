@@ -1,6 +1,8 @@
 import { SideNotes, Note } from "../util/interfaces";
 import ReactMarkdown from "react-markdown";
 import { useEffect, useState } from "react";
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Sidebar: React.FC<SideNotes> = ({
   notes,
@@ -52,11 +54,13 @@ const Sidebar: React.FC<SideNotes> = ({
         <div className="app-sidebar-header">
           <h1>Notes</h1>
           <button
+            
             onClick={() => {
               onAddNote();
             }}
           >
-            Add
+            <AddBoxIcon color="disabled"/>
+            
           </button>
         </div>
         <div className="app-sidebar-notes">
@@ -70,13 +74,14 @@ const Sidebar: React.FC<SideNotes> = ({
               }}
             >
               <div className="sidebar-note-title">
-                <strong>{note.title}</strong>
+                <p>{note.title}</p>
                 <button
                   onClick={() => {
                     onDeleteNote(note.id);
                   }}
+                  style={{paddingTop: '4px'}}
                 >
-                  Delete
+                  <DeleteIcon color="disabled" />
                 </button>
               </div>
               {note.body && (
@@ -93,6 +98,9 @@ const Sidebar: React.FC<SideNotes> = ({
               </small>
             </div>
           ))}
+          <div className="sidebar-user">
+            User Area
+          </div>
         </div>
       </div>
 
@@ -118,7 +126,7 @@ const Sidebar: React.FC<SideNotes> = ({
               }}
             >
               <div className="sidebar-note-title">
-                <strong>{note.title}</strong>
+                <p>{note.title}</p>
                 <button
                   onClick={() => {
                     onDeleteNote(note.id);
@@ -141,6 +149,7 @@ const Sidebar: React.FC<SideNotes> = ({
               </small>
             </div>
           ))}
+
         </div>
       </div>
     </>
