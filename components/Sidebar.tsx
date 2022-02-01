@@ -24,7 +24,7 @@ const Sidebar: React.FC<SideNotes> = ({
   };
 
   const toggleMenu = () => {
-    if (toggle) {
+    if (!toggle) {
       openSlideMenu();
     } else {
       closeSlideMenu();
@@ -42,11 +42,13 @@ const Sidebar: React.FC<SideNotes> = ({
             toggleMenu();
           }}
         >
+          
           <i className="fa fa-plus my-float"></i>
         </a>
       </div>
 
       <div className="app-sidebar" id="sidebar">
+        
         <div className="app-sidebar-header">
           <h1>Notes</h1>
           <button
