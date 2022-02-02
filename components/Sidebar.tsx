@@ -1,21 +1,16 @@
 import { SideNotes, Note } from "../util/interfaces";
 import ReactMarkdown from "react-markdown";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AppContext from '../util/AppContext'
 
-const Sidebar: React.FC<SideNotes> = ({
-  notes,
-  onAddNote,
-  onDeleteNote,
-  activeNote,
-  setActiveNote,
-}) => {
+const Sidebar: React.FC = () => {
+  const appContext = useContext(AppContext);
 
-  
   const [toggle, setToggle] = useState<boolean>(false);
 
-  const sortedNotes: Note[] = notes.sort(
+  const sortedNotes: Note[] = appContext!.state.notes.sort(
     (a: Note, b: Note) => b.lastModified - a.lastModified
   );
 
@@ -58,7 +53,7 @@ const Sidebar: React.FC<SideNotes> = ({
           <button
             
             onClick={() => {
-              onAddNote();
+              appContext!.onAddNote();
             }}
           >
             <AddBoxIcon color="disabled"/>
@@ -69,17 +64,17 @@ const Sidebar: React.FC<SideNotes> = ({
           {sortedNotes.map((note) => (
             <div
               className={`app-sidebar-note ${
-                note.id === activeNote && "active"
+                note.id === appContext!.state.activeNote && "active"
               }`}
               onClick={() => {
-                setActiveNote(note.id);
+                appContext!.setActiveNote(note.id);
               }}
             >
               <div className="sidebar-note-title">
                 <p>{note.title}</p>
                 <button
                   onClick={() => {
-                    onDeleteNote(note.id);
+                    appContext!.onDeleteNote(note.id);
                   }}
                   style={{paddingTop: '4px'}}
                 >
@@ -111,7 +106,7 @@ const Sidebar: React.FC<SideNotes> = ({
           <h1>Notes</h1>
           <button
             onClick={() => {
-              onAddNote();
+              appContext!.onAddNote();
             }}
           >
             Add
@@ -121,17 +116,17 @@ const Sidebar: React.FC<SideNotes> = ({
           {sortedNotes.map((note) => (
             <div
               className={`app-sidebar-note ${
-                note.id === activeNote && "active"
+                note.id === appContext!.state.activeNote && "active"
               }`}
               onClick={() => {
-                setActiveNote(note.id);
+                appContext!.setActiveNote(note.id);
               }}
             >
               <div className="sidebar-note-title">
                 <p>{note.title}</p>
                 <button
                   onClick={() => {
-                    onDeleteNote(note.id);
+                    appContext!.onDeleteNote(note.id);
                   }}
                 >
                   Delete

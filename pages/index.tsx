@@ -20,15 +20,8 @@ const Home: NextPage = () => {
         <meta name="description" content="note taking app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Sidebar 
-      notes={appContext!.state.notes} 
-      onAddNote={appContext!.onAddNote} 
-      onDeleteNote={appContext!.onDeleteNote}
-      activeNote={appContext!.state.activeNote}
-      setActiveNote={appContext!.setActiveNote}
-      />
-      <Main activeNote={appContext!.getActiveNote()} 
-      onUpdateNote={appContext!.onUpdateNote}/>
+      <Sidebar />
+      <Main />
     </div>
   )
 }

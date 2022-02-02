@@ -1,26 +1,32 @@
 import { MainNote } from "../util/interfaces";
 import ReactMarkdown from "react-markdown";
+import AppContext from '../util/AppContext'
+import { useContext } from "react";
 
-const Main: React.FC<MainNote> = ({ activeNote, onUpdateNote }) => {
+// activeNote, onUpdateNote
+
+const Main: React.FC = () => {
+
+  const appContext = useContext(AppContext);
 
   const onEditField = (key: "title" | "body", value: string) => {
     if (key == 'title') {
-        onUpdateNote({
-            id: activeNote.id,
+      appContext!.onUpdateNote({
+            id: appContext!.getActiveNote().id,
             title: value,
-            body: activeNote.body,
+            body: appContext!.getActiveNote().body,
             lastModified: Date.now()
         })
     } else {
-        onUpdateNote({
-            id: activeNote.id,
-            title: activeNote.title,
+      appContext!.onUpdateNote({
+            id: appContext!.getActiveNote().id,
+            title: appContext!.getActiveNote().title,
             body: value,
             lastModified: Date.now()
         })
     }
   }  
-  if(!activeNote) return <div className="no-active-note">No note selected</div>
+  if(!appContext!.getActiveNote()) return <div className="no-active-note">No note selected</div>
  
 
   return (
@@ -29,20 +35,20 @@ const Main: React.FC<MainNote> = ({ activeNote, onUpdateNote }) => {
         <input
           type="text"
           id="title"
-          value={activeNote?.title}
+          value={appContext!.getActiveNote()?.title}
           autoFocus
           onChange={(e) => onEditField("title", e.target.value)}
         />
         <textarea
           id="body"
           placeholder="Write your notes here..."
-          value={activeNote?.body}
+          value={appContext!.getActiveNote()?.body}
           onChange={(e) => onEditField("body", e.target.value)}
         />
       </div>
       <div className="app-main-note-preview">
-        <h1 className="preview-title">{activeNote?.title}</h1>
-        <ReactMarkdown className="markdown-preview">{activeNote?.body}</ReactMarkdown>
+        <h1 className="preview-title">{appContext!.getActiveNote()?.title}</h1>
+        <ReactMarkdown className="markdown-preview">{appContext!.getActiveNote()?.body}</ReactMarkdown>
       </div>
     </div>
   );
