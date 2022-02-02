@@ -2,49 +2,16 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Sidebar from '../components/Sidebar'
 import Main from '../components/Main'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { SideNotes, Note } from '../util/interfaces'
 import { useSession } from 'next-auth/react'
-
-const uuid = require('react-uuid')
-
+import AppContext from '../util/AppContext'
 
 const Home: NextPage = () => {
 
-  const [notes, setNotes] = useState<SideNotes["notes"]>([]);
-  const [activeNote, setActiveNote] = useState<any>();
   const {data: session} = useSession();
-
-  console.log(session);
   
-
-  const onAddNote = (): void => {
-    const newNote: Note = {
-      id: uuid(),
-      title: "Untitled Note",
-      body: "",
-      lastModified: Date.now()
-    };
-    setNotes([newNote, ...notes]);
-  }
-
-  const onUpdateNote = (updatedNote: Note): Note | void => {
-    const updatedNotesArray = notes.map((note) => {
-      if(note.id === activeNote) {
-        return updatedNote;
-      }
-      return note;
-    })
-    setNotes(updatedNotesArray);
-  }
-
-  const onDeleteNote = (idToDelete: number): void => {
-    setNotes(notes.filter((note) => note.id !== idToDelete))
-  }
-
-  const getActiveNote = (): any => {
-    return notes.find((note) => note.id === activeNote);
-  }
+  const appContext = useContext(AppContext);
 
   return (
     <div className="App">
@@ -54,15 +21,14 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Sidebar 
-      notes={notes} 
-      onAddNote={onAddNote} 
-      onDeleteNote={onDeleteNote}
-      activeNote={activeNote}
-      setActiveNote={setActiveNote}
+      notes={appContext!.state.notes} 
+      onAddNote={appContext!.onAddNote} 
+      onDeleteNote={appContext!.onDeleteNote}
+      activeNote={appContext!.state.activeNote}
+      setActiveNote={appContext!.setActiveNote}
       />
-      <Main activeNote={getActiveNote()} 
-      onUpdateNote={onUpdateNote}/>
-      
+      <Main activeNote={appContext!.getActiveNote()} 
+      onUpdateNote={appContext!.onUpdateNote}/>
     </div>
   )
 }

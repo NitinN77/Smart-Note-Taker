@@ -11,6 +11,8 @@ const Sidebar: React.FC<SideNotes> = ({
   activeNote,
   setActiveNote,
 }) => {
+
+  
   const [toggle, setToggle] = useState<boolean>(false);
 
   const sortedNotes: Note[] = notes.sort(
