@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar'
 import Main from '../components/Main'
 import { useState } from 'react'
 import { SideNotes, Note } from '../util/interfaces'
+import { useSession } from 'next-auth/react'
 
 const uuid = require('react-uuid')
 
@@ -12,6 +13,10 @@ const Home: NextPage = () => {
 
   const [notes, setNotes] = useState<SideNotes["notes"]>([]);
   const [activeNote, setActiveNote] = useState<any>();
+  const {data: session} = useSession();
+
+  console.log(session);
+  
 
   const onAddNote = (): void => {
     const newNote: Note = {

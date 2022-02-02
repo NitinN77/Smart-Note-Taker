@@ -60,6 +60,19 @@ body,
   cursor: pointer;
 }
 
+.sign-in-button {
+  margin-top: 1rem;
+  margin-right: 2rem;
+  background-color: #7F6BFF;
+  border: none;
+  width: 15rem;
+  height: 3rem;
+  border-radius: 0.4rem;
+  color: white;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
 .sign-up-button {
   margin-top: 1rem;
   margin-right: 1rem;
