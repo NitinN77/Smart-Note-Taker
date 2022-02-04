@@ -29,4 +29,5 @@ export interface AppContextInterface {
     onUpdateNote: (updatedNote: Note) => Note | void;
     onDeleteNote: (idToDelete: number) => void;
     getActiveNote: Function;
+    writeNote: Function;
 }

@@ -175,8 +175,8 @@ button:hover {
 
 }
 .app-sidebar-note {
-  margin-top: 0.7rem;
-  padding: 25px;
+  margin-top: 0.6rem;
+  padding: 0.1rem 1rem 0.6rem 1rem;
   cursor: pointer;
 }
 .sidebar-note-title {
@@ -283,3 +283,14 @@ textarea {
   padding: 1rem 1.2rem;
 }
 
+.app-main-note-top {
+  display: flex;
+  place-content: space-between;
+}
+
+.save-button {
+  margin-bottom: 20px;
+  border: #7F6BFF solid 1px;
+  color: #7F6BFF;
+  padding: 0rem 2rem;
+}

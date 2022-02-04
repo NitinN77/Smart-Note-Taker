@@ -1,44 +1,47 @@
 import { MainNote } from "../util/interfaces";
 import ReactMarkdown from "react-markdown";
-import AppContext from '../util/AppContext'
+import AppContext from "../util/AppContext";
 import { useContext } from "react";
+import { Button } from "@mui/material";
 
 // activeNote, onUpdateNote
 
 const Main: React.FC = () => {
-
   const appContext = useContext(AppContext);
 
   const onEditField = (key: "title" | "body", value: string) => {
-    if (key == 'title') {
+    if (key == "title") {
       appContext!.onUpdateNote({
-            id: appContext!.getActiveNote().id,
-            title: value,
-            body: appContext!.getActiveNote().body,
-            lastModified: Date.now()
-        })
+        id: appContext!.getActiveNote().id,
+        title: value,
+        body: appContext!.getActiveNote().body,
+        lastModified: Date.now(),
+      });
     } else {
       appContext!.onUpdateNote({
-            id: appContext!.getActiveNote().id,
-            title: appContext!.getActiveNote().title,
-            body: value,
-            lastModified: Date.now()
-        })
+        id: appContext!.getActiveNote().id,
+        title: appContext!.getActiveNote().title,
+        body: value,
+        lastModified: Date.now(),
+      });
     }
-  }  
-  if(!appContext!.getActiveNote()) return <div className="no-active-note">No note selected</div>
- 
+  };
+  if (!appContext!.getActiveNote())
+    return <div className="no-active-note">No note selected</div>;
 
   return (
     <div className="app-main">
       <div className="app-main-note-edit">
-        <input
-          type="text"
-          id="title"
-          value={appContext!.getActiveNote()?.title}
-          autoFocus
-          onChange={(e) => onEditField("title", e.target.value)}
-        />
+        <div className="app-main-note-top"> 
+          <input
+            type="text"
+            id="title"
+            value={appContext!.getActiveNote()?.title}
+            autoFocus
+            onChange={(e) => onEditField("title", e.target.value)}
+          />
+          <Button className="save-button" variant="outlined" onClick={() => {appContext!.writeNote(appContext!.getActiveNote())}}>Save</Button>
+        </div>
         <textarea
           id="body"
           placeholder="Write your notes here..."
@@ -48,7 +51,9 @@ const Main: React.FC = () => {
       </div>
       <div className="app-main-note-preview">
         <h1 className="preview-title">{appContext!.getActiveNote()?.title}</h1>
-        <ReactMarkdown className="markdown-preview">{appContext!.getActiveNote()?.body}</ReactMarkdown>
+        <ReactMarkdown className="markdown-preview">
+          {appContext!.getActiveNote()?.body}
+        </ReactMarkdown>
       </div>
     </div>
   );

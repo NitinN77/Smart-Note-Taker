@@ -6,7 +6,7 @@ import { SideNotes, Note, AppContextInterface } from '../util/interfaces'
 import { useEffect, useState } from "react";
 const uuid = require('react-uuid');
 
-import { collection, DocumentData, getDocs, onSnapshot, orderBy, query } from "firebase/firestore"; 
+import { collection, DocumentData, addDoc, onSnapshot, orderBy, query } from "firebase/firestore"; 
 import { db } from "../util/firebase"
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
@@ -42,12 +42,25 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const getActiveNote = (): any => {
     return notes.find((note) => note.id === activeNote);
   }
+  
+  const getNotes = () => {
+    onSnapshot(query(collection(db, 'notes'), orderBy('lastModified', 'desc')), snapshot => {
+      var newNotes: DocumentData[] = [];
+      snapshot.docs.map(doc => {
+        newNotes.push(doc.data());
+      });
+      setNotes(newNotes as Note[]);
+    })
+  }
 
-  // const getNotes = async () => {
-  //   const querySnapshot = await getDocs(collection(db, "notes"));
-  //   setNotes([querySnapshot.docs, ...notes]);
-  //   console.log(notes);
-  // }
+  const writeNote = async (note) => {
+    try {
+      const docRef = await addDoc(collection(db, "notes"), note);
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
 
   const appContext: AppContextInterface = {state: {
       notes,
@@ -59,22 +72,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     onUpdateNote,
     onDeleteNote,
     getActiveNote,
+    writeNote,
   }
 
   useEffect(() => {
-    onSnapshot(query(collection(db, 'notes'), orderBy('lastModified', 'desc')), snapshot => {
-      var newNotes: DocumentData[] = [];
-      snapshot.docs.map(doc => {
-        newNotes.push(doc.data());
-      });
-      setNotes(newNotes as Note[]);
-    })
+    getNotes();
   }, []);
-
-  useEffect(() => {
-    console.log('notes', notes);
-  }, [notes]);
-  
 
   return (
     <SessionProvider session={session}>

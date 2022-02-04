@@ -71,7 +71,7 @@ const Sidebar: React.FC = () => {
               }}
             >
               <div className="sidebar-note-title">
-                <p>{note.title}</p>
+                <h4>{note.title}</h4>
                 <button
                   onClick={() => {
                     appContext!.onDeleteNote(note.id);
@@ -100,16 +100,21 @@ const Sidebar: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      {/* {mobile view} */}
 
       <div className="app-sidenav" id="sidenav">
+        
         <div className="app-sidebar-header">
           <h1>Notes</h1>
           <button
+            
             onClick={() => {
               appContext!.onAddNote();
             }}
           >
-            Add
+            <AddBoxIcon color="disabled"/>
+            
           </button>
         </div>
         <div className="app-sidebar-notes">
@@ -128,8 +133,9 @@ const Sidebar: React.FC = () => {
                   onClick={() => {
                     appContext!.onDeleteNote(note.id);
                   }}
+                  style={{paddingTop: '4px'}}
                 >
-                  Delete
+                  <DeleteIcon color="disabled" />
                 </button>
               </div>
               {note.body && (
@@ -146,7 +152,9 @@ const Sidebar: React.FC = () => {
               </small>
             </div>
           ))}
-
+          <div className="sidebar-user">
+            User Area
+          </div>
         </div>
       </div>
     </>
