@@ -3,9 +3,11 @@ import type { AppProps } from "next/app";
 import AppContext from "../util/AppContext";
 import { SessionProvider } from "next-auth/react";
 import { SideNotes, Note, AppContextInterface } from '../util/interfaces'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+const uuid = require('react-uuid');
 
-const uuid = require('react-uuid')
+import { collection, DocumentData, getDocs, onSnapshot, orderBy, query } from "firebase/firestore"; 
+import { db } from "../util/firebase"
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
@@ -41,6 +43,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     return notes.find((note) => note.id === activeNote);
   }
 
+  // const getNotes = async () => {
+  //   const querySnapshot = await getDocs(collection(db, "notes"));
+  //   setNotes([querySnapshot.docs, ...notes]);
+  //   console.log(notes);
+  // }
+
   const appContext: AppContextInterface = {state: {
       notes,
       activeNote,
@@ -50,8 +58,23 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     setActiveNote,
     onUpdateNote,
     onDeleteNote,
-    getActiveNote
+    getActiveNote,
   }
+
+  useEffect(() => {
+    onSnapshot(query(collection(db, 'notes'), orderBy('lastModified', 'desc')), snapshot => {
+      var newNotes: DocumentData[] = [];
+      snapshot.docs.map(doc => {
+        newNotes.push(doc.data());
+      });
+      setNotes(newNotes as Note[]);
+    })
+  }, []);
+
+  useEffect(() => {
+    console.log('notes', notes);
+  }, [notes]);
+  
 
   return (
     <SessionProvider session={session}>
