@@ -1,10 +1,9 @@
-import { MainNote } from "../util/interfaces";
+import { Note } from "../util/interfaces";
 import ReactMarkdown from "react-markdown";
 import AppContext from "../util/AppContext";
 import { useContext } from "react";
 import { Button } from "@mui/material";
 
-// activeNote, onUpdateNote
 
 const Main: React.FC = () => {
   const appContext = useContext(AppContext);
@@ -12,15 +11,15 @@ const Main: React.FC = () => {
   const onEditField = (key: "title" | "body", value: string) => {
     if (key == "title") {
       appContext!.onUpdateNote({
-        id: appContext!.getActiveNote().id,
+        id: appContext!.getActiveNote()!.id,
         title: value,
-        body: appContext!.getActiveNote().body,
+        body: appContext!.getActiveNote()!.body,
         lastModified: Date.now(),
       });
     } else {
       appContext!.onUpdateNote({
-        id: appContext!.getActiveNote().id,
-        title: appContext!.getActiveNote().title,
+        id: appContext!.getActiveNote()!.id,
+        title: appContext!.getActiveNote()!.title,
         body: value,
         lastModified: Date.now(),
       });
@@ -40,7 +39,7 @@ const Main: React.FC = () => {
             autoFocus
             onChange={(e) => onEditField("title", e.target.value)}
           />
-          <Button className="save-button" variant="outlined" onClick={() => {appContext!.writeNote(appContext!.getActiveNote())}}>Save</Button>
+          <Button className="save-button" variant="outlined" onClick={() => {appContext!.writeNote(appContext!.getActiveNote() as Note)}}>Save</Button>
         </div>
         <textarea
           id="body"
@@ -52,7 +51,7 @@ const Main: React.FC = () => {
       <div className="app-main-note-preview">
         <h1 className="preview-title">{appContext!.getActiveNote()?.title}</h1>
         <ReactMarkdown className="markdown-preview">
-          {appContext!.getActiveNote()?.body}
+          {appContext!.getActiveNote()?.body as string}
         </ReactMarkdown>
       </div>
     </div>

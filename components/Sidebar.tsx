@@ -1,4 +1,4 @@
-import { SideNotes, Note } from "../util/interfaces";
+import { Note } from "../util/interfaces";
 import ReactMarkdown from "react-markdown";
 import { useContext, useEffect, useState } from "react";
 import AddBoxIcon from '@mui/icons-material/AddBox';

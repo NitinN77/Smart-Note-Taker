@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import AppContext from "../util/AppContext";
 import { SessionProvider } from "next-auth/react";
-import { SideNotes, Note, AppContextInterface } from '../util/interfaces'
+import { Note, AppContextInterface } from '../util/interfaces'
 import { useEffect, useState } from "react";
 const uuid = require('react-uuid');
 

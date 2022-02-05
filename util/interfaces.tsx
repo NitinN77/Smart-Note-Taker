@@ -7,19 +7,6 @@ export interface Note {
     lastModified: number;
 }
 
-export interface SideNotes {
-    notes: Note[]
-    onAddNote: () => void;
-    onDeleteNote: (idToDelete: Note) => void;
-    activeNote: number | undefined;
-    setActiveNote: React.Dispatch<React.SetStateAction<number | undefined>>;
-}
-
-export interface MainNote {
-    activeNote: Note | undefined;
-    onUpdateNote: (updatedNote: Note) => Note | void;
-}
-
 export interface AppContextInterface {
     state: {
         notes: Note[];
