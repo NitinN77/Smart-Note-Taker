@@ -6,12 +6,12 @@ import { SideNotes, Note, AppContextInterface } from '../util/interfaces'
 import { useEffect, useState } from "react";
 const uuid = require('react-uuid');
 
-import { collection, DocumentData, addDoc, onSnapshot, orderBy, query } from "firebase/firestore"; 
+import { collection, DocumentData, addDoc, onSnapshot, orderBy, query, setDoc, doc, updateDoc } from "firebase/firestore"; 
 import { db } from "../util/firebase"
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
-  const [notes, setNotes] = useState<SideNotes["notes"]>([]);
+  const [notes, setNotes] = useState<Note[]>([]);
   const [activeNote, setActiveNote] = useState<any>();
 
   
@@ -39,11 +39,11 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     setNotes(notes.filter((note) => note.id !== idToDelete))
   }
 
-  const getActiveNote = (): any => {
+  const getActiveNote = (): Note | undefined => {
     return notes.find((note) => note.id === activeNote);
   }
   
-  const getNotes = () => {
+  const getNotes = (): void => {
     onSnapshot(query(collection(db, 'notes'), orderBy('lastModified', 'desc')), snapshot => {
       var newNotes: DocumentData[] = [];
       snapshot.docs.map(doc => {
@@ -53,12 +53,11 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     })
   }
 
-  const writeNote = async (note) => {
+  const writeNote = async (note: Note): Promise<void> => {
     try {
-      const docRef = await addDoc(collection(db, "notes"), note);
-      console.log("Document written with ID: ", docRef.id);
+      const docRef = await setDoc(doc(db, "notes", note.id.toLocaleString()), note);
     } catch (e) {
-      console.error("Error adding document: ", e);
+      alert(e);
     }
   }
 

@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface Note {
     id: number;
     title: string;
@@ -14,20 +16,20 @@ export interface SideNotes {
 }
 
 export interface MainNote {
-    activeNote: any;
+    activeNote: Note | undefined;
     onUpdateNote: (updatedNote: Note) => Note | void;
 }
 
 export interface AppContextInterface {
-    state:{
-        notes: SideNotes["notes"];
-        activeNote: any;
+    state: {
+        notes: Note[];
+        activeNote: Note | undefined;
     }
-    setNotes: Function;
+    setNotes: Dispatch<SetStateAction<Note[]>>;
     onAddNote: () => void;
     setActiveNote: React.Dispatch<React.SetStateAction<number | undefined>>;
     onUpdateNote: (updatedNote: Note) => Note | void;
     onDeleteNote: (idToDelete: number) => void;
-    getActiveNote: Function;
-    writeNote: Function;
+    getActiveNote: () => Note | undefined;
+    writeNote: (note: Note) => Promise<void>;
 }

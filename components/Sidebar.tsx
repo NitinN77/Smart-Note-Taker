@@ -14,11 +14,11 @@ const Sidebar: React.FC = () => {
     (a: Note, b: Note) => b.lastModified - a.lastModified
   );
 
-  const openSlideMenu = () => {
+  const openSlideMenu = (): void => {
     document.getElementById("sidenav")!.style.width = "80%";
   };
 
-  const closeSlideMenu = () => {
+  const closeSlideMenu = (): void => {
     document.getElementById("sidenav")!.style.width = "0%";
   };
 
