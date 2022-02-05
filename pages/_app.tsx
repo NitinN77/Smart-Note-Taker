@@ -6,7 +6,7 @@ import { SideNotes, Note, AppContextInterface } from '../util/interfaces'
 import { useEffect, useState } from "react";
 const uuid = require('react-uuid');
 
-import { collection, DocumentData, addDoc, onSnapshot, orderBy, query, setDoc, doc, updateDoc } from "firebase/firestore"; 
+import { collection, DocumentData, deleteDoc , onSnapshot, orderBy, query, setDoc, doc } from "firebase/firestore"; 
 import { db } from "../util/firebase"
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
@@ -35,8 +35,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     setNotes(updatedNotesArray);
   }
 
-  const onDeleteNote = (idToDelete: number): void => {
-    setNotes(notes.filter((note) => note.id !== idToDelete))
+  const onDeleteNote = (idToDelete: Note): void => {
+    setNotes(notes.filter((note) => note.id !== idToDelete.id))
+    deleteNote(idToDelete);
   }
 
   const getActiveNote = (): Note | undefined => {
@@ -59,6 +60,10 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     } catch (e) {
       alert(e);
     }
+  }
+  
+  const deleteNote = async (note: Note): Promise<void> => {
+    await deleteDoc(doc(db, "notes", note.id.toLocaleString()));
   }
 
   const appContext: AppContextInterface = {state: {

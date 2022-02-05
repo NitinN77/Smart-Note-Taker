@@ -10,7 +10,7 @@ export interface Note {
 export interface SideNotes {
     notes: Note[]
     onAddNote: () => void;
-    onDeleteNote: (idToDelete: number) => void;
+    onDeleteNote: (idToDelete: Note) => void;
     activeNote: number | undefined;
     setActiveNote: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
@@ -23,13 +23,13 @@ export interface MainNote {
 export interface AppContextInterface {
     state: {
         notes: Note[];
-        activeNote: Note | undefined;
+        activeNote: number | undefined;
     }
     setNotes: Dispatch<SetStateAction<Note[]>>;
     onAddNote: () => void;
     setActiveNote: React.Dispatch<React.SetStateAction<number | undefined>>;
     onUpdateNote: (updatedNote: Note) => Note | void;
-    onDeleteNote: (idToDelete: number) => void;
+    onDeleteNote: (idToDelete: Note) => void;
     getActiveNote: () => Note | undefined;
     writeNote: (note: Note) => Promise<void>;
 }

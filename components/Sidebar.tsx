@@ -74,7 +74,7 @@ const Sidebar: React.FC = () => {
                 <h4>{note.title}</h4>
                 <button
                   onClick={() => {
-                    appContext!.onDeleteNote(note.id);
+                    appContext!.onDeleteNote(note);
                   }}
                   style={{paddingTop: '4px'}}
                 >
@@ -128,10 +128,10 @@ const Sidebar: React.FC = () => {
               }}
             >
               <div className="sidebar-note-title">
-                <p>{note.title}</p>
+                <h4>{note.title}</h4>
                 <button
                   onClick={() => {
-                    appContext!.onDeleteNote(note.id);
+                    appContext!.onDeleteNote(note);
                   }}
                   style={{paddingTop: '4px'}}
                 >
