@@ -45,7 +45,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   }
   
   const getNotes = (): void => {
-    onSnapshot(query(collection(db, 'notes'), orderBy('lastModified', 'desc')), snapshot => {
+    onSnapshot(query(collection(db, 'notes'), orderBy('lastModified')), snapshot => {
       var newNotes: DocumentData[] = [];
       snapshot.docs.map(doc => {
         newNotes.push(doc.data());
