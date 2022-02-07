@@ -39,7 +39,7 @@ const Main: React.FC = () => {
             autoFocus
             onChange={(e) => onEditField("title", e.target.value)}
           />
-          <Button className="save-button" variant="outlined" onClick={() => {appContext!.writeNote(appContext!.getActiveNote() as Note)}}>Save</Button>
+          <Button className="save-button" variant="outlined" onClick={() => {appContext!.writeAllNotes()}}>Save</Button>
         </div>
         <textarea
           id="body"

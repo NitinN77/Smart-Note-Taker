@@ -5,9 +5,8 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AppContext from '../util/AppContext'
 
-const Sidebar: React.FC = () => {
+const Sidebar = ({ SSRNotes }) => {
   const appContext = useContext(AppContext);
-
   const [toggle, setToggle] = useState<boolean>(false);
 
   const sortedNotes: Note[] = appContext!.state.notes.sort(
@@ -31,6 +30,10 @@ const Sidebar: React.FC = () => {
     setToggle(!toggle);
   };
 
+  useEffect(() => {
+    appContext!.setNotes(SSRNotes);
+  }, []);
+  
   return (
     <>
       <div className="float-button" id="float-button">
@@ -63,6 +66,7 @@ const Sidebar: React.FC = () => {
         <div className="app-sidebar-notes">
           {sortedNotes.map((note) => (
             <div
+              key={note.id}
               className={`app-sidebar-note ${
                 note.id === appContext!.state.activeNote && "active"
               }`}
@@ -120,6 +124,7 @@ const Sidebar: React.FC = () => {
         <div className="app-sidebar-notes">
           {sortedNotes.map((note) => (
             <div
+              key={note.id}
               className={`app-sidebar-note ${
                 note.id === appContext!.state.activeNote && "active"
               }`}
@@ -160,5 +165,6 @@ const Sidebar: React.FC = () => {
     </>
   );
 };
+
 
 export default Sidebar;

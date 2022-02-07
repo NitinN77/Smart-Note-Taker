@@ -19,4 +19,5 @@ export interface AppContextInterface {
     onDeleteNote: (idToDelete: Note) => void;
     getActiveNote: () => Note | undefined;
     writeNote: (note: Note) => Promise<void>;
+    writeAllNotes: Function;
 }

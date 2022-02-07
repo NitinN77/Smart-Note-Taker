@@ -61,6 +61,10 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
       alert(e);
     }
   }
+
+  const writeAllNotes = () => {
+    notes.map(note => writeNote(note))
+  }
   
   const deleteNote = async (note: Note): Promise<void> => {
     await deleteDoc(doc(db, "notes", note.id.toLocaleString()));
@@ -77,6 +81,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     onDeleteNote,
     getActiveNote,
     writeNote,
+    writeAllNotes,
   }
 
   useEffect(() => {
