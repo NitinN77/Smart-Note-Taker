@@ -83,11 +83,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     writeNote,
     writeAllNotes,
   }
-
-  useEffect(() => {
-    getNotes();
-  }, []);
-
+  
   return (
     <SessionProvider session={session}>
       <AppContext.Provider value={appContext}>
