@@ -1,5 +1,4 @@
 import { Note } from "../util/interfaces";
-import ReactMarkdown from "react-markdown";
 import { useContext, useEffect, useState } from "react";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -9,9 +8,7 @@ const Sidebar = ({ SSRNotes }) => {
   const appContext = useContext(AppContext);
   const [toggle, setToggle] = useState<boolean>(false);
 
-  const sortedNotes: Note[] = appContext!.state.notes.sort(
-    (a: Note, b: Note) => b.lastModified - a.lastModified
-  );
+  const sortedNotes: Note[] = appContext!.state.notes
 
   const openSlideMenu = (): void => {
     document.getElementById("sidenav")!.style.width = "80%";
@@ -85,18 +82,6 @@ const Sidebar = ({ SSRNotes }) => {
                   <DeleteIcon color="disabled" />
                 </button>
               </div>
-              {note.body && (
-                <ReactMarkdown>
-                  {note.body.split("\n")[0].substring(0, 100) + "..."}
-                </ReactMarkdown>
-              )}
-              <small className="note-meta">
-                Last Modified{" "}
-                {new Date(note.lastModified).toLocaleDateString("en-IN", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </small>
             </div>
           ))}
           <div className="sidebar-user">
@@ -143,18 +128,6 @@ const Sidebar = ({ SSRNotes }) => {
                   <DeleteIcon color="disabled" />
                 </button>
               </div>
-              {note.body && (
-                <ReactMarkdown>
-                  {note.body.split("\n")[0].substring(0, 100) + "..."}
-                </ReactMarkdown>
-              )}
-              <small className="note-meta">
-                Last Modified{" "}
-                {new Date(note.lastModified).toLocaleDateString("en-IN", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </small>
             </div>
           ))}
           <div className="sidebar-user">

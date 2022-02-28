@@ -4,7 +4,6 @@ export interface Note {
     id: number;
     title: string;
     body?: string;
-    lastModified: number;
 }
 
 export interface AppContextInterface {
