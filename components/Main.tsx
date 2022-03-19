@@ -1,9 +1,12 @@
 import { Note } from "../util/interfaces";
 import ReactMarkdown from "react-markdown";
 import AppContext from "../util/AppContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "@mui/material";
+import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';
 
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const Main: React.FC = () => {
   const appContext = useContext(AppContext);
@@ -25,8 +28,25 @@ const Main: React.FC = () => {
       });
     }
   };
+
   if (!appContext!.getActiveNote())
     return <div className="no-active-note">No note selected</div>;
+
+  const [mdValue, setMdValue] = useState<string | undefined>(appContext!.getActiveNote()?.body)
+  const [tempval, setTempval] = useState<string | undefined>(appContext!.getActiveNote()?.body)
+  
+  useEffect(() => {
+    setMdValue(appContext!.getActiveNote()?.body)
+    setTempval(appContext!.getActiveNote()?.body)
+  }, [appContext!.getActiveNote()?.id])
+
+  useEffect(() => {
+    if(tempval != mdValue) {
+      onEditField("body", mdValue!)
+      setMdValue(tempval)
+    }
+  }, [tempval])
+  
 
   return (
     <div className="app-main">
@@ -41,21 +61,18 @@ const Main: React.FC = () => {
           />
           <Button className="save-button" variant="outlined" onClick={() => {appContext!.writeAllNotes()}}>Save</Button>
         </div>
-        <textarea
+        {/* <textarea
           id="body"
           placeholder="Write your notes here..."
           value={appContext!.getActiveNote()?.body}
           onChange={(e) => onEditField("body", e.target.value)}
-        />
-      </div>
-      <div className="app-main-note-preview">
-        <h1 className="preview-title">{appContext!.getActiveNote()?.title}</h1>
-        <ReactMarkdown className="markdown-preview">
-          {appContext!.getActiveNote()?.body as string}
-        </ReactMarkdown>
+        /> */}
+        <ReactQuill value={tempval}
+          onChange={setTempval}/>
       </div>
     </div>
   );
 };
 
 export default Main;
+

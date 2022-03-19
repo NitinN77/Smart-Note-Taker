@@ -5,7 +5,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AppContext from '../util/AppContext'
 
-const Sidebar = ({ SSRNotes }) => {
+const Sidebar = () => {
   const appContext = useContext(AppContext);
   const [toggle, setToggle] = useState<boolean>(false);
 
@@ -29,10 +29,6 @@ const Sidebar = ({ SSRNotes }) => {
     }
     setToggle(!toggle);
   };
-
-  useEffect(() => {
-    appContext!.setNotes(SSRNotes);
-  }, []);
   
   return (
     <>

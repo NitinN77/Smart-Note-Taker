@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Sidebar from '../components/Sidebar'
 import Main from '../components/Main'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import AppContext from '../util/AppContext'
 
@@ -13,7 +13,13 @@ import { Note } from '../util/interfaces'
 const Home = ({ newNotes }) => {
 
   const {data: session} = useSession();
+  const appContext = useContext(AppContext);
+
+  useEffect(() => {
+    appContext?.setNotes(newNotes)
+  }, [newNotes])
   
+
   return (
     <div className="App">
       <Head>
@@ -21,7 +27,7 @@ const Home = ({ newNotes }) => {
         <meta name="description" content="note taking app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Sidebar SSRNotes={newNotes}/>
+      <Sidebar />
       <Main />
     </div>
   )
