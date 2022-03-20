@@ -15,7 +15,7 @@ const Sidebar = () => {
 
   const sortedNotes: Note[] = appContext!.state.notes.sort(
     (a: Note, b: Note) => b.lastModified - a.lastModified
-  );
+  ).filter(note => note.author == session?.user?.email);
 
   const openSlideMenu = (): void => {
     document.getElementById("sidenav")!.style.width = "80%";
@@ -64,7 +64,7 @@ const Sidebar = () => {
           <h1>Notes</h1>
           <button
             onClick={() => {
-              appContext!.onAddNote();
+              appContext!.onAddNote(session!.user!.email!);
             }}
           >
             <AddBoxIcon color="disabled" />
@@ -130,7 +130,7 @@ const Sidebar = () => {
           <h1>Notes</h1>
           <button
             onClick={() => {
-              appContext!.onAddNote();
+              appContext!.onAddNote(session!.user!.email!);
             }}
           >
             <AddBoxIcon color="disabled" />

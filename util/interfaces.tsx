@@ -5,6 +5,7 @@ export interface Note {
     title: string;
     body?: string;
     lastModified: number;
+    author: any
 }
 
 export interface AppContextInterface {
@@ -15,7 +16,7 @@ export interface AppContextInterface {
     }
     setNotes: Dispatch<SetStateAction<Note[]>>;
     setUser: any;
-    onAddNote: () => void;
+    onAddNote: (user: string) => void;
     setActiveNote: React.Dispatch<React.SetStateAction<number | undefined>>;
     onUpdateNote: (updatedNote: Note) => Note | void;
     onDeleteNote: (idToDelete: Note) => void;

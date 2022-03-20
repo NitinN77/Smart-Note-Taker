@@ -18,12 +18,13 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
   const [user, setUser] = useState<any>(null)
   
-  const onAddNote = (): void => {
+  const onAddNote = (user: string): void => {
     const newNote: Note = {
       id: uuid(),
       title: "Untitled Note",
       body: "",
       lastModified: Date.now(),
+      author: user
     };
     setNotes([newNote, ...notes]);
   }

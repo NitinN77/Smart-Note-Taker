@@ -18,6 +18,7 @@ const Main: React.FC = () => {
         title: value,
         body: appContext!.getActiveNote()!.body,
         lastModified: Date.now(),
+        author: appContext!.getActiveNote()!.author
       });
     } else {
       appContext!.onUpdateNote({
@@ -25,6 +26,7 @@ const Main: React.FC = () => {
         title: appContext!.getActiveNote()!.title,
         body: value,
         lastModified: Date.now(),
+        author: appContext!.getActiveNote()!.author
       });
     }
   };
