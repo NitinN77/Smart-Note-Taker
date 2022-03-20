@@ -11,8 +11,10 @@ export interface AppContextInterface {
     state: {
         notes: Note[];
         activeNote: number | undefined;
+        user: any;
     }
     setNotes: Dispatch<SetStateAction<Note[]>>;
+    setUser: any;
     onAddNote: () => void;
     setActiveNote: React.Dispatch<React.SetStateAction<number | undefined>>;
     onUpdateNote: (updatedNote: Note) => Note | void;

@@ -1,12 +1,16 @@
 import { Note } from "../util/interfaces";
 import ReactMarkdown from "react-markdown";
 import { useContext, useEffect, useState } from "react";
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AppContext from '../util/AppContext'
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AppContext from "../util/AppContext";
+import rehypeRaw from "rehype-raw";
+import { useSession, signIn, signOut } from "next-auth/react";
+import Router from "next/router";
 
 const Sidebar = () => {
   const appContext = useContext(AppContext);
+  const { data: session } = useSession();
   const [toggle, setToggle] = useState<boolean>(false);
 
   const sortedNotes: Note[] = appContext!.state.notes.sort(
@@ -29,7 +33,18 @@ const Sidebar = () => {
     }
     setToggle(!toggle);
   };
-  
+
+  useEffect(() => {
+    if (session) {
+      appContext!.setUser(session.user!.email);
+      console.log(session.user!.email);
+    }
+  }, [session]);
+
+  const handleSignIn = () => {
+    signIn();
+  };
+
   return (
     <>
       <div className="float-button" id="float-button">
@@ -40,23 +55,19 @@ const Sidebar = () => {
             toggleMenu();
           }}
         >
-          
           <i className="fa fa-plus my-float"></i>
         </a>
       </div>
 
       <div className="app-sidebar" id="sidebar">
-        
         <div className="app-sidebar-header">
           <h1>Notes</h1>
           <button
-            
             onClick={() => {
               appContext!.onAddNote();
             }}
           >
-            <AddBoxIcon color="disabled"/>
-            
+            <AddBoxIcon color="disabled" />
           </button>
         </div>
         <div className="app-sidebar-notes">
@@ -76,14 +87,14 @@ const Sidebar = () => {
                   onClick={() => {
                     appContext!.onDeleteNote(note);
                   }}
-                  style={{paddingTop: '4px'}}
+                  style={{ paddingTop: "4px" }}
                 >
                   <DeleteIcon color="disabled" />
                 </button>
               </div>
               {note.body && (
-                <ReactMarkdown>
-                  {note.body.split("\n")[0].substring(0, 100) + "..."}
+                <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+                  {note.body.split("\n")[0].substring(0, 50) + "..."}
                 </ReactMarkdown>
               )}
               <small className="note-meta">
@@ -96,25 +107,33 @@ const Sidebar = () => {
             </div>
           ))}
           <div className="sidebar-user">
-            User Area
+            {session ? (
+              <div>
+                {session.user?.email?.split("@")[0]}{" "}
+                <button style={{ float: "right" }} onClick={() => signOut()}>
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <button style={{ float: "right" }} onClick={() => handleSignIn()}>
+                Sign In
+              </button>
+            )}
           </div>
         </div>
       </div>
-      
+
       {/* {mobile view} */}
 
       <div className="app-sidenav" id="sidenav">
-        
         <div className="app-sidebar-header">
           <h1>Notes</h1>
           <button
-            
             onClick={() => {
               appContext!.onAddNote();
             }}
           >
-            <AddBoxIcon color="disabled"/>
-            
+            <AddBoxIcon color="disabled" />
           </button>
         </div>
         <div className="app-sidebar-notes">
@@ -134,7 +153,7 @@ const Sidebar = () => {
                   onClick={() => {
                     appContext!.onDeleteNote(note);
                   }}
-                  style={{paddingTop: '4px'}}
+                  style={{ paddingTop: "4px" }}
                 >
                   <DeleteIcon color="disabled" />
                 </button>
@@ -154,13 +173,19 @@ const Sidebar = () => {
             </div>
           ))}
           <div className="sidebar-user">
-            User Area
+            {session ? (
+              <div>
+                {session.user?.email}{" "}
+                <button onClick={() => signOut()}>Sign Out</button>
+              </div>
+            ) : (
+              <button onClick={() => signIn()}>Sign In</button>
+            )}
           </div>
         </div>
       </div>
     </>
   );
 };
-
 
 export default Sidebar;

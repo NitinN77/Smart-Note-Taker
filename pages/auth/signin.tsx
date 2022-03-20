@@ -23,7 +23,9 @@ const SignUp = ({ providers }) => {
                 type="submit"
                 value={`Sign in with ${provider.name}`}
                 className="sign-in-button"
-                onClick={() => signIn(provider.id)}
+                onClick={() => signIn(provider.id, {
+                  callbackUrl: `${window.location.origin}/`,
+                })}
               />
             </div>
           ))}

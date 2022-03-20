@@ -16,6 +16,7 @@ const Home = ({ newNotes }) => {
   const appContext = useContext(AppContext);
 
   useEffect(() => {
+    
     appContext?.setNotes(newNotes)
   }, [newNotes])
   

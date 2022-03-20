@@ -5,6 +5,8 @@ import { SessionProvider } from "next-auth/react";
 import { Note, AppContextInterface } from '../util/interfaces'
 import { useEffect, useState } from "react";
 const uuid = require('react-uuid');
+import { useSession, signIn, signOut } from "next-auth/react"
+
 
 import { collection, DocumentData, deleteDoc , onSnapshot, orderBy, query, setDoc, doc } from "firebase/firestore"; 
 import { db } from "../util/firebase"
@@ -14,13 +16,14 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [notes, setNotes] = useState<Note[]>([]);
   const [activeNote, setActiveNote] = useState<any>();
 
+  const [user, setUser] = useState<any>(null)
   
   const onAddNote = (): void => {
     const newNote: Note = {
       id: uuid(),
       title: "Untitled Note",
       body: "",
-      lastModified: Date.now()
+      lastModified: Date.now(),
     };
     setNotes([newNote, ...notes]);
   }
@@ -56,6 +59,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
   const writeNote = async (note: Note): Promise<void> => {
     try {
+      console.log(note);
+      
       const docRef = await setDoc(doc(db, "notes", note.id.toLocaleString()), note);
     } catch (e) {
       alert(e);
@@ -73,7 +78,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const appContext: AppContextInterface = {state: {
       notes,
       activeNote,
+      user
     },
+    setUser,
     setNotes,
     onAddNote,
     setActiveNote,
