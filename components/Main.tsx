@@ -1,5 +1,3 @@
-import { Note } from "../util/interfaces";
-import ReactMarkdown from "react-markdown";
 import AppContext from "../util/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { Button } from "@mui/material";

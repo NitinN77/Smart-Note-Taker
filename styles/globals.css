@@ -281,6 +281,7 @@ textarea {
   /* background-color: red; */
   width: 30%;
   padding: 1rem 1.2rem;
+  
 }
 
 .app-main-note-top {
@@ -293,4 +294,24 @@ textarea {
   border: #7F6BFF solid 1px;
   color: #7F6BFF;
   padding: 0rem 2rem;
+}
+
+.signout-button{
+  float: right;
+  margin-bottom: 1rem;
+}
+
+.username {
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+.searchbar {
+  margin-left: 1.3rem;
+  width: 93%;
+  height: 2.2rem;
+  border: 1px solid rgb(179, 177, 177);
+  border-radius: 5px;
+  outline: none;
+  padding: 0.5rem;
 }
