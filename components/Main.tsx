@@ -70,7 +70,47 @@ const Main: React.FC = () => {
           onChange={(e) => onEditField("body", e.target.value)}
         /> */}
         <ReactQuill value={tempval}
-          onChange={setTempval}/>
+          onChange={setTempval}
+          modules={{
+            toolbar: [
+              [{ header: "1" }, { header: "2" }, { font: [] }],
+              [{ size: [] }],
+              ["bold", "italic", "underline", "strike", "blockquote"],
+              [{ align: [] }],
+              [{ color: [] }, { background: [] }],
+              [
+                { list: "ordered" },
+                { list: "bullet" },
+                { indent: "-1" },
+                { indent: "+1" },
+              ],
+              ["link", "video", "image", "code-block"],
+              ["clean"],
+              [{script: "sub"}, {script: "super"}],
+            ],
+          }}
+          formats={[
+            "header",
+            "font",
+            "size",
+            "bold",
+            "italic",
+            "underline",
+            "strike",
+            "blockquote",
+            "color",
+            "background",
+            "list",
+            "bullet",
+            "indent",
+            "link",
+            "video",
+            "image",
+            "code-block",
+            "align",
+            "script"
+          ]}
+          />
       </div>
     </div>
   );
