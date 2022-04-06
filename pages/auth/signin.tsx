@@ -18,7 +18,7 @@ const SignUp = ({ providers }) => {
                     <input type='submit' value={"SIGN UP"} className='sign-up-button'/>
                 </div> */}
           {Object.values(providers).map((provider: any) => (
-            <div>
+            <div key={provider.id}> 
               <input
                 type="submit"
                 value={`Sign in with ${provider.name}`}

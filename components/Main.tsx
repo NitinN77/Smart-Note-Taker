@@ -29,8 +29,7 @@ const Main: React.FC = () => {
     }
   };
 
-  if (!appContext!.getActiveNote())
-    return <div className="no-active-note">No note selected</div>;
+  
 
   const [mdValue, setMdValue] = useState<string | undefined>(appContext!.getActiveNote()?.body)
   const [tempval, setTempval] = useState<string | undefined>(appContext!.getActiveNote()?.body)
@@ -47,8 +46,12 @@ const Main: React.FC = () => {
     }
   }, [tempval])
   
+  if (!appContext!.getActiveNote()) {
+    return <div className="no-active-note">No note selected</div>;
+  }
 
-  return (
+   else return (
+    
     <div className="app-main">
       <div className="app-main-note-edit">
         <div className="app-main-note-top"> 
@@ -59,7 +62,7 @@ const Main: React.FC = () => {
             autoFocus
             onChange={(e) => onEditField("title", e.target.value)}
           />
-          <Button className="save-button" variant="outlined" onClick={() => {appContext!.writeAllNotes()}}>Save</Button>
+          <Button style={{marginBottom:"20px",border:"#7F6BFF solid 1px",color:"#7F6BFF",padding:"0rem 2rem"}} variant="outlined" onClick={() => {appContext!.writeAllNotes()}}>Save</Button>
         </div>
         {/* <textarea
           id="body"
@@ -69,6 +72,7 @@ const Main: React.FC = () => {
         /> */}
         <ReactQuill value={tempval}
           onChange={setTempval}
+          style={{height: '85vh'}}
           modules={{
             toolbar: [
               [{ header: "1" }, { header: "2" }, { font: [] }],

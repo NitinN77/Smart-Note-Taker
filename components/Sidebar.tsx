@@ -124,10 +124,10 @@ const Sidebar = () => {
             {session ? (
               <div style={{display: 'flex', placeContent: 'space-between'}}>
                 <span className="username"><br />{session.user?.email?.split("@")[0]}{" "}</span>
-                <Button className="signout-button" variant="outlined" onClick={() => signOut()}>Sign Out</Button>
+                <Button style={{marginBottom:"20px",border:"#7F6BFF solid 1px",color:"#7F6BFF",padding:"0rem 2rem"}} variant="outlined" onClick={() => signOut()}>Sign Out</Button>
               </div>
             ) : (
-              <Button className="signout-button" variant="outlined" onClick={() => handleSignIn()}>
+              <Button style={{marginBottom:"20px",border:"#7F6BFF solid 1px",color:"#7F6BFF",padding:"0rem 2rem", float: "right", height: "3rem"}} variant="outlined" onClick={() => handleSignIn()}>
                 Sign In
               </Button>
             )}
@@ -188,10 +188,10 @@ const Sidebar = () => {
             {session ? (
               <div>
                 {session.user?.email}{" "}
-                <Button className="save-button" variant="outlined" onClick={() => signOut()}>Sign Out</Button>
+                <Button style={{marginBottom:"20px",border:"#7F6BFF solid 1px",color:"#7F6BFF",padding:"0rem 2rem"}} variant="outlined" onClick={() => signOut()}>Sign Out</Button>
               </div>
             ) : (
-              <button onClick={() => signIn()}>Sign In</button>
+              <button style={{marginBottom:"20px",border:"#7F6BFF solid 1px",color:"#7F6BFF",padding:"0rem 2rem"}} onClick={() => signIn()}>Sign In</button>
             )}
           </div>
         </div>
