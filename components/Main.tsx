@@ -41,7 +41,7 @@ const Main: React.FC = () => {
 
   useEffect(() => {
     if(tempval != mdValue) {
-      onEditField("body", mdValue!)
+      onEditField("body", tempval!)
       setMdValue(tempval)
     }
   }, [tempval])
