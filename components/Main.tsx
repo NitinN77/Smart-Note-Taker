@@ -1,10 +1,16 @@
-import AppContext from "../util/AppContext";
-import { useContext, useEffect, useState } from "react";
-import { Button } from "@mui/material";
-import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import AppContext from "../util/AppContext";
+import { useContext, useEffect, useState, useMemo, useRef } from "react";
+import { Button } from "@mui/material";
+import dynamic from 'next/dynamic'
+
+const importJodit = () => import('jodit-react');
+
+const JoditEditor = dynamic(importJodit, {
+    ssr: false,
+});
 
 const Main: React.FC = () => {
   const appContext = useContext(AppContext);
@@ -29,23 +35,13 @@ const Main: React.FC = () => {
     }
   };
 
-  
+  const editor = useRef(null);
+  const [content, setContent] = useState("Start writing");
+  const config = {
+    readonly: false,
+    height: 400
+  };
 
-  const [mdValue, setMdValue] = useState<string | undefined>(appContext!.getActiveNote()?.body)
-  const [tempval, setTempval] = useState<string | undefined>(appContext!.getActiveNote()?.body)
-  
-  useEffect(() => {
-    setMdValue(appContext!.getActiveNote()?.body)
-    setTempval(appContext!.getActiveNote()?.body)
-  }, [appContext!.getActiveNote()?.id])
-
-  useEffect(() => {
-    if(tempval != mdValue) {
-      onEditField("body", tempval!)
-      setMdValue(tempval)
-    }
-  }, [tempval])
-  
   if (!appContext!.getActiveNote()) {
     return <div className="no-active-note">No note selected</div>;
   }
@@ -70,7 +66,13 @@ const Main: React.FC = () => {
           value={appContext!.getActiveNote()?.body}
           onChange={(e) => onEditField("body", e.target.value)}
         /> */}
-        <ReactQuill value={tempval}
+    <JoditEditor
+        ref={editor}
+        value={appContext!.getActiveNote()?.body!}
+        config={config}
+        onBlur={(e) => onEditField("body", e)}
+      />
+        {/* <ReactQuill value={tempval}
           onChange={setTempval}
           style={{height: '85vh'}}
           modules={{
@@ -112,7 +114,7 @@ const Main: React.FC = () => {
             "align",
             "script"
           ]}
-          />
+          /> */}
       </div>
     </div>
   );
