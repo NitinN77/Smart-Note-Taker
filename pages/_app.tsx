@@ -60,8 +60,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
   const writeNote = async (note: Note): Promise<void> => {
     try {
-      console.log(note);
-      
       const docRef = await setDoc(doc(db, "notes", note.id.toLocaleString()), note);
     } catch (e) {
       alert(e);

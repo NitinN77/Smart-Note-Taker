@@ -51,7 +51,7 @@ const Main: React.FC = () => {
         onEditField("body", appContext!.getActiveNote()?.body! + "\n\n" + response.data.text)
       })
       .catch(function (response) {
-        console.log(response);
+        alert(response);
       });
   }
 

@@ -39,7 +39,6 @@ const Sidebar = () => {
   useEffect(() => {
     if (session) {
       appContext!.setUser(session.user!.email);
-      console.log(session.user!.email);
     }
   }, [session]);
 
