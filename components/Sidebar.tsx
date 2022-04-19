@@ -19,23 +19,6 @@ const Sidebar = () => {
     (a: Note, b: Note) => b.lastModified - a.lastModified
   ).filter(note => note.author == session?.user?.email);
 
-  const openSlideMenu = (): void => {
-    document.getElementById("sidenav")!.style.width = "80%";
-  };
-
-  const closeSlideMenu = (): void => {
-    document.getElementById("sidenav")!.style.width = "0%";
-  };
-
-  const toggleMenu = () => {
-    if (!toggle) {
-      openSlideMenu();
-    } else {
-      closeSlideMenu();
-    }
-    setToggle(!toggle);
-  };
-
   useEffect(() => {
     if (session) {
       appContext!.setUser(session.user!.email);
@@ -58,17 +41,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="float-button" id="float-button">
-        <a
-          href="#"
-          className="float"
-          onClick={() => {
-            toggleMenu();
-          }}
-        >
-          <i className="fa fa-plus my-float"></i>
-        </a>
-      </div>
+
 
       <div className="app-sidebar" id="sidebar">
         <div className="app-sidebar-header">
@@ -136,65 +109,6 @@ const Sidebar = () => {
 
       {/* {mobile view} */}
 
-      <div className="app-sidenav" id="sidenav">
-        <div className="app-sidebar-header">
-          <h1>Notes</h1>
-          <button
-            onClick={() => {
-              appContext!.onAddNote(session!.user!.email!);
-            }}
-          >
-            <AddBoxIcon color="disabled" />
-          </button>
-        </div>
-        <div className="app-sidebar-notes">
-          {sortedNotes.map((note) => (
-            <div
-              key={note.id}
-              className={`app-sidebar-note ${
-                note.id === appContext!.state.activeNote && "active"
-              }`}
-              onClick={() => {
-                appContext!.setActiveNote(note.id);
-              }}
-            >
-              <div className="sidebar-note-title">
-                <h4>{note.title}</h4>
-                <button
-                  onClick={() => {
-                    appContext!.onDeleteNote(note);
-                  }}
-                  style={{ paddingTop: "4px" }}
-                >
-                  <DeleteIcon color="disabled" />
-                </button>
-              </div>
-              {note.body && (
-                <ReactMarkdown>
-                  {note.body.split("\n")[0].substring(0, 100) + "..."}
-                </ReactMarkdown>
-              )}
-              <small className="note-meta">
-                Last Modified{" "}
-                {new Date(note.lastModified).toLocaleDateString("en-IN", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </small>
-            </div>
-          ))}
-          <div className="sidebar-user">
-            {session ? (
-              <div>
-                {session.user?.email}{" "}
-                <Button style={{marginBottom:"20px",border:"#7F6BFF solid 1px",color:"#7F6BFF",padding:"0rem 2rem"}} variant="outlined" onClick={() => signOut()}>Sign Out</Button>
-              </div>
-            ) : (
-              <button style={{marginBottom:"20px",border:"#7F6BFF solid 1px",color:"#7F6BFF",padding:"0rem 2rem"}} onClick={() => signIn()}>Sign In</button>
-            )}
-          </div>
-        </div>
-      </div>
     </>
   );
 };
