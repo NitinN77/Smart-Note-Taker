@@ -4,8 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AppContext from "../util/AppContext";
-import { Button, Input } from "@mui/material";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Button, IconButton, Input } from "@mui/material";
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import rehypeRaw from "rehype-raw";
 import { useSession, signIn, signOut } from "next-auth/react";
 
@@ -38,6 +38,19 @@ const Sidebar = () => {
       }
     });
   };
+
+  const toggleSidebar = () => {
+    const mainContainer = Array.from(document.getElementsByClassName('main-parent') as HTMLCollectionOf<HTMLElement>)
+    if(!toggle) {
+      document.getElementById('sidebar')!.style.display = 'inline';
+      document.getElementById('sidebar')!.style.width = '100vw';
+      mainContainer[0].style.display = 'none'
+    } else {
+      document.getElementById('sidebar')!.style.display = 'none';
+      mainContainer[0].style.display = 'block'
+    }
+    setToggle(!toggle)
+  }
 
   return (
     <>
@@ -104,10 +117,14 @@ const Sidebar = () => {
               </Button>
             )}
           </div>
-        </div>
-      </div>
 
-      {/* {mobile view} */}
+        </div>
+        
+
+      </div>
+      <IconButton onClick={() => {toggleSidebar()}} className="toggle-button">
+        <ChevronRightIcon />
+      </IconButton>
 
     </>
   );

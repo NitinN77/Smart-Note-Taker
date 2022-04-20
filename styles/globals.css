@@ -85,13 +85,6 @@ body,
   cursor: pointer;
 }
 
-@media screen and (max-width: 800px) {
-  .sign-up-main {
-    margin-top: 12rem;
-    display: grid;
-    grid-template-columns: 100%;
-  }  
-}
 
 button {
   background: none;
@@ -121,24 +114,10 @@ button:hover {
   display: none;
 }
 
-@media screen and (max-width: 800px) {
-  .app-sidebar {
-    display: none !important;
-  }
-  .app-sidenav {
-    display: block;
-  }
-}
-
 .float-button {
   display: none;
 }
 
-@media screen and (max-width: 800px) {
-  .float-button {
-    display: block;
-  }
-}
 
 .float{
 	position:fixed;
@@ -284,7 +263,6 @@ textarea {
   /* background-color: red; */
   width: 30%;
   padding: 1rem 1.2rem;
-  
 }
 
 .app-main-note-top {
@@ -320,3 +298,29 @@ textarea {
   margin-bottom: 0.5rem;
 }
 
+.toggle-button {
+  display: none;
+}
+
+
+
+@media screen and (max-width: 800px) {
+  .toggle-button {
+    display: block;
+  }
+  .app-sidebar {
+    display: none;
+  }
+  .no-active-note {
+    width: 100%;
+  }
+  .sidebar-user {
+    width: 90%;
+  }
+  .app-main-note-edit {
+    padding-left: 0;
+  }
+  .searchbar {
+    width: 90%;
+  }
+}

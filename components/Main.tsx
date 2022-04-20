@@ -63,10 +63,10 @@ const Main: React.FC = () => {
   };
 
   if (!appContext!.getActiveNote()) {
-    return <div className="no-active-note">No note selected</div>;
+    return <div className="no-active-note main-parent">No note selected</div>;
   } else
     return (
-      <div className="app-main">
+      <div className="app-main main-parent">
         <div className="app-main-note-edit">
           <div className="app-main-note-top">
             <input
@@ -93,7 +93,7 @@ const Main: React.FC = () => {
             <Button
               style={{
                 marginBottom: "20px",
-                marginLeft: "25px",
+                marginLeft: "16px",
                 border: "#7F6BFF solid 1px",
                 color: "#7F6BFF",
                 padding: "0rem 2rem",
