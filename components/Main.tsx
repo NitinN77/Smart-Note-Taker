@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { useSession } from "next-auth/react";
 
 const importJodit = () => import("jodit-react");
 
@@ -16,6 +17,7 @@ const JoditEditor = dynamic(importJodit, {
 
 const Main: React.FC = () => {
   const appContext = useContext(AppContext);
+  const { data: session } = useSession();
 
   const onEditField = (key: "title" | "body", value: string) => {
     if (key == "title") {
@@ -114,7 +116,7 @@ const Main: React.FC = () => {
               }}
               variant="outlined"
               onClick={() => {
-                appContext!.writeAllNotes();
+                appContext!.updateUser(session.user.email);
               }}
             >
               Save

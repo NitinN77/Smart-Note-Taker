@@ -23,4 +23,5 @@ export interface AppContextInterface {
     getActiveNote: () => Note | undefined;
     writeNote: (note: Note) => Promise<void>;
     writeAllNotes: Function;
+    updateUser: any;
 }

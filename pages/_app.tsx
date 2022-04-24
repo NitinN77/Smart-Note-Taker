@@ -1,3 +1,4 @@
+// @ts-nocheck
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import AppContext from "../util/AppContext";
@@ -6,10 +7,11 @@ import { Note, AppContextInterface } from '../util/interfaces'
 import { useEffect, useState } from "react";
 const uuid = require('react-uuid');
 import { useSession, signIn, signOut } from "next-auth/react"
+import emailjs from 'emailjs-com';
 
-
-import { collection, DocumentData, deleteDoc , onSnapshot, orderBy, query, setDoc, doc } from "firebase/firestore"; 
+import { collection, DocumentData, deleteDoc , onSnapshot, orderBy, query, setDoc, doc, getDoc } from "firebase/firestore"; 
 import { db } from "../util/firebase"
+
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
@@ -74,6 +76,18 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     await deleteDoc(doc(db, "notes", note.id.toLocaleString()));
   }
 
+  const updateUser = async(email: string) : Promise<void> => {
+    if (appContext!.state.notes.length > 10){
+      alert("You've used up your free storage(Max: 10). Notes Count: " + appContext!.state.notes.length )
+    } 
+    try {
+      const docNewRef = await setDoc(doc(db, "users", email), {notesCount: appContext!.state.notes.length});
+      writeAllNotes();
+    } catch (e) {
+      alert(e);
+    }
+  }
+
   const appContext: AppContextInterface = {state: {
       notes,
       activeNote,
@@ -88,6 +102,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     getActiveNote,
     writeNote,
     writeAllNotes,
+    updateUser
   }
   
   return (
