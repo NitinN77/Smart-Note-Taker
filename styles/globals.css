@@ -304,7 +304,7 @@ textarea {
 
 
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 600px) {
   .toggle-button {
     display: block;
   }
@@ -323,4 +323,14 @@ textarea {
   .searchbar {
     width: 90%;
   }
+}
+
+.perc-slider-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.perc-slider {
+  width: 30%;
 }

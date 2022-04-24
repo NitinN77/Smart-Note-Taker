@@ -4,7 +4,9 @@ import AppContext from "../util/AppContext";
 import { useContext, useEffect, useState, useMemo, useRef } from "react";
 import { Button } from "@mui/material";
 import dynamic from "next/dynamic";
-import axios from 'axios';
+import axios from "axios";
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
 
 const importJodit = () => import("jodit-react");
 
@@ -36,11 +38,17 @@ const Main: React.FC = () => {
   };
 
   const [highlightedText, setHighlightedText] = useState<string>("");
+  const [summarizePerc, setSummarizePerc] = useState<number>(50);
+
+  useEffect(() => {
+    console.log(summarizePerc);
+  }, [summarizePerc])
   
+
   const summarizeText = () => {
     var body = new FormData();
-    body.append('text', highlightedText);
-    body.append('per', 0.5);
+    body.append("text", highlightedText);
+    body.append("per", summarizePerc / 100);
     axios({
       method: "post",
       url: "https://sntsummarizer.herokuapp.com/summarize",
@@ -48,15 +56,21 @@ const Main: React.FC = () => {
       headers: { "Content-Type": "multipart/form-data" },
     })
       .then(function (response) {
-        onEditField("body", appContext!.getActiveNote()?.body! + "\n\n" + response.data.text)
+        onEditField(
+          "body",
+          appContext!.getActiveNote()?.body! + "\n\n" + response.data.text
+        );
       })
       .catch(function (response) {
         alert(response);
       });
+  };
+
+  const handlePercChange = (e) => {
+    setSummarizePerc(e.target.value)
   }
 
   const editor = useRef(null);
-  const [content, setContent] = useState("Start writing");
   const config = {
     readonly: false,
     height: 400,
@@ -106,61 +120,26 @@ const Main: React.FC = () => {
               Save
             </Button>
           </div>
-          {/* <textarea
-          id="body"
-          placeholder="Write your notes here..."
-          value={appContext!.getActiveNote()?.body}
-          onChange={(e) => onEditField("body", e.target.value)}
-        /> */}
+          <div className="perc-slider-wrapper">
+
+            <Slider
+              key={`sliderkey-${summarizePerc}`}
+              className="perc-slider"
+              defaultValue={summarizePerc}
+              aria-label="Default"
+              valueLabelDisplay="auto"
+              onChange={handlePercChange}
+            />
+          </div>
           <JoditEditor
             ref={editor}
             value={appContext!.getActiveNote()?.body!}
             config={config}
-            onBlur={(e) => {onEditField("body", e); setHighlightedText(window.getSelection().toString())}}
+            onBlur={(e) => {
+              onEditField("body", e);
+              setHighlightedText(window.getSelection().toString());
+            }}
           />
-          {/* <ReactQuill value={tempval}
-          onChange={setTempval}
-          style={{height: '85vh'}}
-          modules={{
-            toolbar: [
-              [{ header: "1" }, { header: "2" }, { font: [] }],
-              [{ size: [] }],
-              ["bold", "italic", "underline", "strike", "blockquote"],
-              [{ align: [] }],
-              [{ color: [] }, { background: [] }],
-              [
-                { list: "ordered" },
-                { list: "bullet" },
-                { indent: "-1" },
-                { indent: "+1" },
-              ],
-              ["link", "video", "image", "code-block"],
-              ["clean"],
-              [{script: "sub"}, {script: "super"}],
-            ],
-          }}
-          formats={[
-            "header",
-            "font",
-            "size",
-            "bold",
-            "italic",
-            "underline",
-            "strike",
-            "blockquote",
-            "color",
-            "background",
-            "list",
-            "bullet",
-            "indent",
-            "link",
-            "video",
-            "image",
-            "code-block",
-            "align",
-            "script"
-          ]}
-          /> */}
         </div>
       </div>
     );
