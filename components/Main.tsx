@@ -142,6 +142,7 @@ const Main: React.FC = () => {
               setHighlightedText(window.getSelection().toString());
             }}
           />
+          
         </div>
       </div>
     );
