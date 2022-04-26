@@ -2,9 +2,11 @@
 
 import AppContext from "../util/AppContext";
 import { useContext, useEffect, useState, useMemo, useRef } from "react";
+import imageToBase64 from 'image-to-base64/browser';
 import { Button } from "@mui/material";
 import dynamic from "next/dynamic";
 import axios from "axios";
+import { useFilePicker } from 'use-file-picker';
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { useSession } from "next-auth/react";
@@ -15,9 +17,17 @@ const JoditEditor = dynamic(importJodit, {
   ssr: false,
 });
 
+
+
 const Main: React.FC = () => {
   const appContext = useContext(AppContext);
   const { data: session } = useSession();
+  const [openFileSelector, { filesContent, loading, errors }] = useFilePicker({
+    readAs: 'DataURL',
+    accept: 'image/*',
+    multiple: true,
+    limitFilesConfig: { max: 1 },
+  });
 
   const onEditField = (key: "title" | "body", value: string) => {
     if (key == "title") {
@@ -44,7 +54,10 @@ const Main: React.FC = () => {
 
   useEffect(() => {
     console.log(summarizePerc);
-  }, [summarizePerc])
+    if (filesContent.length > 0) {
+        TextOCR(filesContent[0].content);
+    }
+  }, [summarizePerc,filesContent])
 
   const summarizeText = () => {
     var body = new FormData();
@@ -66,8 +79,30 @@ const Main: React.FC = () => {
         alert(response);
       });
     };
+  
+    const TextOCR = (file) => {
+      imageToBase64(file).then(
+        (data) => {
+          var bod = new FormData();
+          bod.append("image", data);
+          axios({
+            method: "post",
+            url: "http://116.73.188.146:3000/dev/ocr",
+            data: {"image": data},
+          }).then(function (response){
+            onEditField(
+              "body",
+              appContext!.getActiveNote()?.body! + "\n\n" + response.data.text
+            );
+          })
+        }
+      )
+
+    }
 
     const scanImage = () => {
+      openFileSelector()
+
       // onEditField(
       //   "body",
       //   appContext!.getActiveNote()?.body! + "\n\n" + response.data.text
