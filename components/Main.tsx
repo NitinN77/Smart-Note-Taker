@@ -67,6 +67,13 @@ const Main: React.FC = () => {
       });
     };
 
+    const scanImage = () => {
+      // onEditField(
+      //   "body",
+      //   appContext!.getActiveNote()?.body! + "\n\n" + response.data.text
+      // );
+    }
+
   const handlePercChange = (e) => {
     setSummarizePerc(e.target.value)
   }
@@ -94,6 +101,21 @@ const Main: React.FC = () => {
             <Button
               style={{
                 marginBottom: "20px",
+                border: "black solid 1px",
+                color: "black",
+                padding: "0rem 2rem",
+              }}
+              variant="outlined"
+              onClick={() => {
+                scanImage();
+              }}
+            >
+              Scan
+            </Button>
+            <Button
+              style={{
+                marginBottom: "20px",
+                marginLeft: "16px",
                 border: "darkblue solid 1px",
                 color: "darkblue",
                 padding: "0rem 2rem",
