@@ -45,7 +45,6 @@ const Main: React.FC = () => {
   useEffect(() => {
     console.log(summarizePerc);
   }, [summarizePerc])
-  
 
   const summarizeText = () => {
     var body = new FormData();
@@ -66,7 +65,7 @@ const Main: React.FC = () => {
       .catch(function (response) {
         alert(response);
       });
-  };
+    };
 
   const handlePercChange = (e) => {
     setSummarizePerc(e.target.value)
@@ -123,7 +122,6 @@ const Main: React.FC = () => {
             </Button>
           </div>
           <div className="perc-slider-wrapper">
-
             <Slider
               key={`sliderkey-${summarizePerc}`}
               className="perc-slider"
